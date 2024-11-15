@@ -8,19 +8,19 @@
 
 устанавливает утилиту wget на систему
 
-`sudo yum install wget`
+`•sudo yum install wget`
 
 ![image](https://github.com/user-attachments/assets/cd281b7a-df70-49cc-8450-1598a9ca02d7)
 
 Надо будет скачать файл репозитория
 
-`sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo`
+`•sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo`
 
 ![image](https://github.com/user-attachments/assets/e4b08797-b243-457a-915c-8e8be1e0cc97)
 
 Следует установить docker
 
-`sudo yum install docker-ce docker-ce-cli containerd.io`
+`•sudo yum install docker-ce docker-ce-cli containerd.io`
 
 ![image](https://github.com/user-attachments/assets/7f1d6bcc-db85-41df-aa7a-f930aba0d26a)
 
@@ -30,7 +30,7 @@
 
 Запускаем его и разрешаем автозапуск
 
-`sudo systemctl enable docker --now`
+`•sudo systemctl enable docker --now`
 
 ![image](https://github.com/user-attachments/assets/51cdf1b6-db46-4f57-bc03-40afd3eb4403)
 
@@ -40,83 +40,89 @@
 
 Сначала нужно убедиться в наличии пакета curl
 
-`sudo yum install curl`
+`•sudo yum install curl`
 
 Объявить переменной COMVER, полученной в результате curl запроса. 
 
 Она хранит в себе номер последней версии Docker Compose
 
-`COMVER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)`
+`•COMVER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)`
 
 Теперь скачиваем скрипт docker-compose последней версии, используя объявленную ранее переменную и помещаем его в каталог /usr/bin
 
-`sudo curl -L "https://github.com/docker/compose/releases/download/$COMVER/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose`
+`•sudo curl -L "https://github.com/docker/compose/releases/download/$COMVER/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose`
 
 ![image](https://github.com/user-attachments/assets/82a056db-98d6-4f0a-9b7b-11b5d623bf3f)
 
 Потебуется предоставление прав на выполнение файла docker-compose
 
-`sudo chmod +x /usr/bin/docker-compose`
+`•sudo chmod +x /usr/bin/docker-compose`
 
 А также проверка установленной версии Docker Compose
 
-`sudo docker-compose --version`
+`•sudo docker-compose --version`
 
 ![image](https://github.com/user-attachments/assets/31b099bc-4d98-4bda-bde0-a3d2a9c8eced)
 
 
 
-# Делаем grafana
+# Занимаемся grafana
 
-Установка git
+Проводим установку git
 
-`sudo yum install git`
+`•sudo yum install git`
 
-![image](https://github.com/user-attachments/assets/7c6ed42f-297e-4003-99d7-0641ebb8749e)
+![image](https://github.com/user-attachments/assets/a4aa5bce-12a1-41c2-8738-38d202bf0f43)
+
+![image](https://github.com/user-attachments/assets/1c7b3dc4-ffed-417c-aa50-6ed9656a579d)
+
+![image](https://github.com/user-attachments/assets/babda015-3890-430d-a121-fcaf63c698a3)
 
 Этот код скачивает содержимое репозитория skl256/grafana_stack_for_docker
 
-`sudo git clone https://github.com/skl256/grafana_stack_for_docker.git`
+`•sudo git clone https://github.com/skl256/grafana_stack_for_docker.git`
+
+![image](https://github.com/user-attachments/assets/808ad99d-d53d-4bd1-89e0-16393131a605)
 
 Заходит в папку - cd
 
-`cd grafana_stack_for_docker`
+`•cd grafana_stack_for_docker`
 
 cd .. - возвращает в папку выше
 
-![image](https://github.com/user-attachments/assets/458f469c-9ea7-4a65-afc8-a0165d6b61a0)
-
 Cоздаем папки двумя разными способами
 
-`sudo mkdir -p /mnt/common_volume/swarm/grafana/config`
+`•sudo mkdir -p /mnt/common_volume/swarm/grafana/config`
 
-`sudo mkdir -p /mnt/common_volume/grafana/{grafana-config,grafana-data,prometheus-data,loki-data,promtail-data}`
+`•sudo mkdir -p /mnt/common_volume/grafana/{grafana-config,grafana-data,prometheus-data,loki-data,promtail-data}`
+
+![image](https://github.com/user-attachments/assets/47500c09-9a28-46e3-8200-dfe384617460)
 
 Выдаем права
 
-`sudo chown -R $(id -u):$(id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana}`
+`•sudo chown -R $(id -u):$(id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana}`
 
 Создаем файл
 
-`sudo touch /mnt/common_volume/grafana/grafana-config/grafana.ini`
+`•sudo touch /mnt/common_volume/grafana/grafana-config/grafana.ini`
 
 Копирование файлов
 
-`sudo cp config/* /mnt/common_volume/swarm/grafana/config/`
+`•sudo cp config/* /mnt/common_volume/swarm/grafana/config/`
 
 Переименовывание файла
 
-`sudo mv grafana.yaml docker-compose.yaml`
-
-![image](https://github.com/user-attachments/assets/0eff5b93-209e-4701-94b2-6fdeadc72e7b)
+`•sudo mv grafana.yaml docker-compose.yaml`
 
 Собрать докер (нужно запускать из папки где docker-compose.yaml)
 
-`sudo docker compose up -d`
+![image](https://github.com/user-attachments/assets/57c2ec71-5ec7-4854-b701-c50bd9a8db49)
+
+`•sudo docker compose up -d`
 
 Опустить докер - sudo docker compose stop
 
-![image](https://github.com/user-attachments/assets/e3b10e0d-402c-40ea-a693-62eed116ef21)
+![image](https://github.com/user-attachments/assets/b0620a74-78a4-4545-bdcc-dac19be81ae4)
 
 
 
