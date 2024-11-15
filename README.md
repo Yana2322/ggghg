@@ -6,42 +6,45 @@
 
 # Установка docker
 
-Устанавливает утилиту wget на систему
+устанавливает утилиту wget на систему
 
 `sudo yum install wget`
 
-![image](https://github.com/user-attachments/assets/dbe3beb2-2aa2-4514-84f2-ba918c01b631)
+![image](https://github.com/user-attachments/assets/cd281b7a-df70-49cc-8450-1598a9ca02d7)
 
-Скачиваем файл репозитория
+Надо будет скачать файл репозитория
 
 `sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo`
 
-![image](https://github.com/user-attachments/assets/9b835e6a-ceb6-463c-a765-c210c98ce1ee)
+![image](https://github.com/user-attachments/assets/e4b08797-b243-457a-915c-8e8be1e0cc97)
 
-Устанавливаем docker
+Следует установить docker
 
 `sudo yum install docker-ce docker-ce-cli containerd.io`
 
-![image](https://github.com/user-attachments/assets/8513ae86-f330-4faa-b1d2-d8d95dfb3fea)
+![image](https://github.com/user-attachments/assets/7f1d6bcc-db85-41df-aa7a-f930aba0d26a)
+
+![image](https://github.com/user-attachments/assets/a4a10eb9-bb04-4ea5-a021-86f819230187)
+
+![image](https://github.com/user-attachments/assets/826ec2e0-cdfe-4a4c-851d-8d6dffc205be)
 
 Запускаем его и разрешаем автозапуск
 
 `sudo systemctl enable docker --now`
 
-![image](https://github.com/user-attachments/assets/7dd7c415-0dcc-4f34-8c95-a54ea0df24b2)
+![image](https://github.com/user-attachments/assets/51cdf1b6-db46-4f57-bc03-40afd3eb4403)
 
 
 
 # Установка compose
 
-Для начала нужно убедиться в наличии пакета curl
+Сначала нужно убедиться в наличии пакета curl
 
 `sudo yum install curl`
 
-![image](https://github.com/user-attachments/assets/ebcc6f9d-858f-4b31-85da-661414595e5e)
+Объявить переменной COMVER, полученной в результате curl запроса. 
 
-Объявление переменной COMVER, полученной в результате curl запроса, хранящей в себе номер последней
-версии Docker Compose
+Она хранит в себе номер последней версии Docker Compose
 
 `COMVER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)`
 
@@ -49,17 +52,17 @@
 
 `sudo curl -L "https://github.com/docker/compose/releases/download/$COMVER/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose`
 
-![image](https://github.com/user-attachments/assets/448e7919-c923-4cc3-9f5c-d8acfddb78a4)
+![image](https://github.com/user-attachments/assets/82a056db-98d6-4f0a-9b7b-11b5d623bf3f)
 
-Предоставление прав на выполнение файла docker-compose
+Потебуется предоставление прав на выполнение файла docker-compose
 
 `sudo chmod +x /usr/bin/docker-compose`
 
-Проверка установленной версии Docker Compose
+А также проверка установленной версии Docker Compose
 
 `sudo docker-compose --version`
 
-![image](https://github.com/user-attachments/assets/ce583dc7-7904-45df-b653-72a02343d9b9)
+![image](https://github.com/user-attachments/assets/31b099bc-4d98-4bda-bde0-a3d2a9c8eced)
 
 
 
