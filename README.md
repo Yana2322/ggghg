@@ -130,31 +130,27 @@ Cоздаем папки двумя разными способами
 
 Команда открывает файл docker-compose.yaml в текстовом редакторе vi с правами суперпользователя
 
-`sudo vi docker-compose.yaml`
+`•sudo vi docker-compose.yaml`
 
 Что-бы что-то изменить в тесковом редакторе нужно нажать insert на клавиатуре
 
 Затем в docker-compose нужно вставить node-exporter и удалить ненужные файлы (можно вставить готовый докер)
 
-![image](https://github.com/user-attachments/assets/259220f9-0dc4-4296-b0d2-6fbbdc34cf6b)
+![image](https://github.com/user-attachments/assets/f41938b0-8934-42d9-a990-5de113e8bb13)
 
-выйти не сохраняясь из vim - `esc -> :q!`
-
-выйти сохраняясь из vim - `esc -> :wq!`
+выйти не сохраняясь из vim - `esc -> :q!`, выйти сохраняясь из vim - `esc -> :wq!`
 
 Заходим в другую папку 
 
-`cd /mnt/common_volume/swarm/grafana/config/`
+`•cd /mnt/common_volume/swarm/grafana/config/`
 
 Открываем файл prometheus.yaml в текстовом редакторе vi с правами суперпользователя
 
-`sudo vi prometheus.yaml`
-
-![image](https://github.com/user-attachments/assets/42c4880b-e56f-45a1-9077-8bc4972354be)
+`•sudo vi prometheus.yaml`
 
 Далее нужно исправить targets: на exporter:9100
 
-![image](https://github.com/user-attachments/assets/850c7813-b767-4cb8-a01b-5c57e168a6fc)
+
 
 
 
