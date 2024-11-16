@@ -191,7 +191,7 @@ Cоздаем папки двумя разными способами
 снизу меняем на "code"
 Переходим в терминал и пишем
 
-3. `echo -e "# TYPE OILCOINT_metric1 gauge\nOILCOINT_metric1 0" | curl --data-binary @- http://localhost:8428/api/v1/import/prometheus  ` - команда отправляет бинарные данные (например, метрики в формате Prometheus) на локальный сервер, который слушает на порту 8428.
+•`echo -e "# TYPE OILCOINT_metric1 gauge\nOILCOINT_metric1 0" | curl --data-binary @- http://localhost:8428/api/v1/import/prometheus  ` - команда отправляет бинарные данные (например, метрики в формате Prometheus) на локальный сервер, который слушает на порту 8428.
 
 •`curl -G 'http://localhost:8428/api/v1/query' --data-urlencode 'query=OILCOINT_metric1'` - Команда делает запрос к API для получения данных по метрике OILCOINT_metric1. А также команда выводит информацию о типе и значении этой метрики в формате, который может быть использован системой мониторинга Prometheus.
 
