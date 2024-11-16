@@ -132,9 +132,7 @@ Cоздаем папки двумя разными способами
 
 `•sudo vi docker-compose.yaml`
 
-Что-бы что-то изменить в тесковом редакторе нужно нажать insert на клавиатуре
-
-Затем в docker-compose нужно вставить node-exporter и удалить ненужные файлы (можно вставить готовый докер)
+Что-бы что-то изменить в тесковом редакторе нужно нажать insert на клавиатуре. Потом следует в docker-compose нужно вставить node-exporter и удалить ненужные файлы (можно вставить готовый докер)
 
 ![image](https://github.com/user-attachments/assets/f41938b0-8934-42d9-a990-5de113e8bb13)
 
@@ -150,56 +148,65 @@ Cоздаем папки двумя разными способами
 
 Далее нужно исправить targets: на exporter:9100
 
+![image](https://github.com/user-attachments/assets/ef9a23e5-85d1-47ee-8697-a1c81cd4f05b)
 
 
 
+#  Grafana
 
-# Делаем grafana на сайте
+1. Переходим на сайт `localhost:3000`
+    * User & Password GRAFANA: `admin`
+    * Код графаны: `3000`
+    * Код прометеуса: `http://prometheus:9090`
+2. В меню выбираем вкладку Dashboards и создаем Dashboard
+    * ждем кнопку +Add visualization, а после "Configure a new data source"
+    * выбираем Prometheus
+    * Connection
+    * `http://prometheus:9090`
+3. Authentication
+    * Basic authentication
+    * User: `admin`
+    * Password: `admin`
+    * Нажимаем на Save & test
+4. Ищем вкладку меню  и выбираем Dashboards и создаем Dashboard
+    * ждем кнопку "Import dashboard"
+    * Find and import dashboards for common applications at grafana.com/dashboards: 1860 //ждем кнопку Load
+    * Select Prometheus ждем кнопку "Import"
 
-- Заходим на сайт localhost:3000
-
-- Регестрируемся на сайте
-     - User и Password - admin, потом где он предлагает установить пароль, нажимаем - скип
-
-- Открываем Dashboards - create dashboard - configure a new data source - prometheus
-     - Connection: http://prometheus:9090
-     - Authentication - basic authentication - admin admin
-     - save and test
-
-- Dashboards - import dashboard
-     - Find and import... - 1860 - load
-     - prometheus - prometheus
-     - import
-
-![image](https://github.com/user-attachments/assets/d550635b-e67e-4337-bd60-b669b032f89f)
+![image](https://github.com/user-attachments/assets/71fc841c-4c92-4fcc-afba-483d0f8a26a1)
 
 
 
-# Делаем VictoriaMetrics
+#  VictoriaMetrics
 
-Для начала зайдем в нужную папку
+Для начала изменим docker-compose.yaml. Для начала зайдем в нужную папку
 
-`cd grafana_stack_for_docker`
+`•cd grafana_stack_for_docker`
 
-Открываем docker-compose
+•`sudo vi docker-compose.yaml` - команда sudo открывает файл docker-compose.yaml в редакторе.
 
-`sudo vi docker-compose.yaml`
+В самом текстовом редакторе после prometheus вставляем. Захом в connection
+там где мы писали http//:prometheus:9090 пишем http:victoriametrics:9090 И заменяем имя из "Prometheus-2" в "yani"
+нажимаем на dashboards add visualition выбираем "yani"
+снизу меняем на "code"
+Переходим в терминал и пишем
 
-После prometheus вставляем vmagent (но у нас уже вставлен готовый докер)
+3. `echo -e "# TYPE OILCOINT_metric1 gauge\nOILCOINT_metric1 0" | curl --data-binary @- http://localhost:8428/api/v1/import/prometheus  ` - команда отправляет бинарные данные (например, метрики в формате Prometheus) на локальный сервер, который слушает на порту 8428.
 
-![image](https://github.com/user-attachments/assets/c6d0b8ee-ebc0-425b-a0ec-a2514620506c)
+•`curl -G 'http://localhost:8428/api/v1/query' --data-urlencode 'query=OILCOINT_metric1'` - Команда делает запрос к API для получения данных по метрике OILCOINT_metric1. А также команда выводит информацию о типе и значении этой метрики в формате, который может быть использован системой мониторинга Prometheus.
 
-Открываем grafana на сайте и также создаем dashboard, но в Connection пишем http://victoriametrics:8428
+Значение 0 меняем на любое другое
 
-Заменяем имя из "Prometheus-2" в "Vika" нажимаем на dashboards add visualition выбираем "Vika" снизу меняем на "code"
+![image](https://github.com/user-attachments/assets/348cbd7a-8824-4b95-8600-f109b00de3e6)
 
-В терминале пишем:
+Копируем переменную OILCOINT_metric1 и вставляем в query
 
-`echo -e "# TYPE OILCOINT_metric1 gauge\nOILCOINT_metric1 0" | curl --data-binary @- http://localhost:8428/api/v1/import/prometheus`
+Нажимаем run
 
-команда отправляет бинарные данные (например, метрики в формате Prometheus) на локальный сервер
+![image](https://github.com/user-attachments/assets/11ffe25e-a7ed-4daf-9799-619c4d482dc8)
 
-Потом вводим команду которая делает запрос к API для получения данных по метрике OILCOINT_metric1
+![image](https://github.com/user-attachments/assets/cef63faa-849e-4457-9307-fed668b8aa80)
 
-`curl -G 'http://localhost:8428/api/v1/query' --data-urlencode 'query=OILCOINT_metric1'`
- 
+Копируем переменную OILCOINT_metric1 и вставляем в code
+
+![image](https://github.com/user-attachments/assets/739a9d3f-163b-40df-bc74-f5b76613a5f5)
